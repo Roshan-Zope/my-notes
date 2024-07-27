@@ -27,7 +27,9 @@ Future<void> showErrorDialog(BuildContext context, String msg) {
   );
 }
 
-Future<bool> showEmailNotVerifiedDialog(BuildContext context,) {
+Future<bool> showEmailNotVerifiedDialog(
+  BuildContext context,
+) {
   return showDialog<bool>(
     context: context,
     barrierDismissible: false,
@@ -59,7 +61,7 @@ Future<bool> showLogOutDailog(BuildContext context) {
       builder: (context) {
         return AlertDialog(
           title: const Text('Log out'),
-          content: const Text('Are you sure you want to log out?'),
+          content: const Text('Are you sure to log out?'),
           actions: [
             TextButton(
                 onPressed: () {
@@ -71,6 +73,30 @@ Future<bool> showLogOutDailog(BuildContext context) {
                   Navigator.of(context).pop(true);
                 },
                 child: const Text('Log out')),
+          ],
+        );
+      }).then((value) => value ?? false);
+}
+
+Future<bool> showDeleteDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Note'),
+          content: const Text('Are you sure to delete this note?'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('No')),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Yes')),
           ],
         );
       }).then((value) => value ?? false);
