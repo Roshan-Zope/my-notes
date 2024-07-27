@@ -101,3 +101,22 @@ Future<bool> showDeleteDialog(BuildContext context) {
         );
       }).then((value) => value ?? false);
 }
+
+Future<void> showCannotShareEmptyNoteDailog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Sharing'),
+          content: const Text('You cannot share an empty note!'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok')),
+          ],
+        );
+      });
+}
