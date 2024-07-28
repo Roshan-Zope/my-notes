@@ -97,6 +97,14 @@ class _LoginViewState extends State<LoginView> {
             },
             child: const Text('Login'),
           ),
+          const SizedBox(height: 10.0,),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, forgotPasswordRoute);
+            },
+            child: const Text('Forgot Password?'),
+          ),
+          const SizedBox(height: 10.0,),
           TextButton(
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 //import 'package:flutter_fire/constants/routes.dart';
 
 Future<void> showErrorDialog(BuildContext context, String msg) {
@@ -45,7 +46,7 @@ Future<bool> showEmailNotVerifiedDialog(
         actions: [
           TextButton(
               onPressed: () {
-                //Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (context) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (context) => false);
               },
               child: const Text('OK')),
         ],
@@ -119,4 +120,41 @@ Future<void> showCannotShareEmptyNoteDailog(BuildContext context) {
           ],
         );
       });
+}
+
+Future<void> showPasswordResetSentDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Password Reset'),
+          content: Text('Mail is sent to you on your email for password reset.'),
+        );
+      });
+}
+
+typedef CloseDialog = void Function();
+
+CloseDialog showLoadingDialog({
+  required BuildContext context,
+  required String text,
+}) {
+  final dialog = AlertDialog(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const CircularProgressIndicator(),
+        const SizedBox(height: 10.0),
+        Text(text),
+      ],
+    ),
+  );
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => dialog,
+  );
+
+  return () => Navigator.of(context).pop();
 }
