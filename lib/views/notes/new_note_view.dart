@@ -93,7 +93,7 @@ class _NewNoteViewState extends State<NewNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Note'),
+        title: const Text('New Note', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.blue,
         actions: [
           IconButton(
@@ -107,26 +107,54 @@ class _NewNoteViewState extends State<NewNoteView> {
             },
             icon: const Icon(
               Icons.share,
+              size: 24,
             ),
+            tooltip: 'Share Note',
           ),
         ],
+        elevation: 4.0, // Adds shadow under the AppBar
       ),
       body: FutureBuilder(
         future: createOrGetExistingNote(context),
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              _setupTextControllerListener();
-              return TextField(
+          if (snapshot.connectionState == ConnectionState.done) {
+            _setupTextControllerListener();
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
                 controller: _textController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Write your new note here..',
+                decoration: InputDecoration(
+                  hintText: 'Write your new note here...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.blueGrey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: const BorderSide(color: Colors.blue),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.blueGrey.shade200),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                 ),
-              );
-            default:
-              return const CircularProgressIndicator();
+                style: const TextStyle(fontSize: 16),
+              ),
+            );
+          } else {
+            return const Center(
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 6.0,
+                ),
+              ),
+            );
           }
         },
       ),
